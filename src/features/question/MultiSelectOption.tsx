@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { IQuestion } from "../../interfaces/IQuestion";
 import IAnswer from '../../interfaces/IAnswer';
@@ -6,7 +6,6 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import BouncyCheckboxGroup, {
     ICheckboxButton,
   } from "react-native-bouncy-checkbox-group";
-import questions from "../../data/questions";
 
 interface Props {
     question: IQuestion;
@@ -14,28 +13,22 @@ interface Props {
 }
 
 const MultiSelectQuestion = ({ question, addAnswer }: Props) => {
-    const [selectedOption, setSelectedOption] = useState(0);
+    const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
-    const handleType = (text: string) => {
-        //call addAnswer()
-        //setAnswer(text);
+    const handleChange = () => {
+        console.log('Hit');
+        const answer: IAnswer = {
+            questionId: question.id,
+            questionType: question.questionType,
+            selectedOptionIds: selectedOptions
+        }
+        addAnswer(answer);
     }
 
-    const generateData = (): ICheckboxButton[] => {
-        let returnArr: ICheckboxButton[] = [];
-        question.singleSelectOptions?.map(({ id, text }) => {
-            returnArr.push({ id, 
-                text, 
-                textStyle: {
-                    textDecorationLine: "none"
-                },
-                style: {
-                    marginTop: 10
-                }
-            });
-        });
-        return returnArr;
-    }
+    useEffect(() => {
+        if (selectedOptions.length > 0)
+            handleChange();
+    }, [selectedOptions])
 
     return (
         <View style={styles.layout}>
@@ -43,8 +36,12 @@ const MultiSelectQuestion = ({ question, addAnswer }: Props) => {
             {question.multiSelectOptions?.map(option => (
                 <BouncyCheckbox
                     text={option.text}
-                    onPress={() => {
-                        console.log('Pressed');
+                    onPress={(isChecked: boolean) => {
+                        if (isChecked) {
+                            setSelectedOptions(prev => [...prev, option.id])
+                        } else {
+                            setSelectedOptions(prev => prev.filter(opt => opt !== option.id));
+                        }
                     }}
                     textStyle={{
                         textDecorationLine: 'none'

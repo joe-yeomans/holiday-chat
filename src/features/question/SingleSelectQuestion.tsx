@@ -13,11 +13,13 @@ interface Props {
 }
 
 const SingleSelectQuestion = ({ question, addAnswer }: Props) => {
-    const [selectedOption, setSelectedOption] = useState(0);
-
-    const handleType = (text: string) => {
-        //call addAnswer()
-        //setAnswer(text);
+    const handleChange = (optionId: number) => {
+        const answer: IAnswer = {
+            questionId: question.id,
+            questionType: question.questionType,
+            singleSelectOption: optionId
+        }
+        addAnswer(answer);
     }
 
     const generateData = (): ICheckboxButton[] => {
@@ -41,8 +43,8 @@ const SingleSelectQuestion = ({ question, addAnswer }: Props) => {
             <Text style={styles.text}>{question.question}</Text>
             <BouncyCheckboxGroup
                 data={generateData()}
-                onChange={(selected) => {
-
+                onChange={(selected: ICheckboxButton) => {
+                    handleChange(selected.id);
                 }}
                 style={{ flexDirection: "column" }}
             />

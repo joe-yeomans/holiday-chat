@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { IQuestion } from "../../interfaces/IQuestion";
 import IAnswer from '../../interfaces/IAnswer';
+import { questionType } from "../../enum/questionType";
 
 interface Props {
     question: IQuestion;
@@ -10,10 +11,22 @@ interface Props {
 
 const NumberQuestion = ({ question, addAnswer }: Props) => {
     const [answer, setAnswer] = useState('');
-
+ 
     const handleType = (text: string) => {
         //call addAnswer()
-        setAnswer(text);
+        const number = Number(text);
+
+        if (!isNaN(number)) {
+            setAnswer(text);
+
+            const answer: IAnswer = {
+                questionId: question.id,
+                questionType: question.questionType,
+                selectedNumber: number
+            }
+
+            addAnswer(answer);
+        }
     }
 
     return (

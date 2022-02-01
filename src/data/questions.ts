@@ -54,7 +54,31 @@ const questions: IQuestion[] = [
         id: 6,
         question: 'What date do you want to go?',
         questionType: questionType.date
-    }
+    },
+    {
+        id: 7,
+        question: 'How many nights?',
+        questionType: questionType.number
+    },
+    {
+        id: 8,
+        question: 'Select a single option',
+        questionType: questionType.singleSelect,
+        singleSelectOptions: [
+            {
+                id: 1,
+                text: 'Option 1'
+            },
+            {
+                id: 2,
+                text: 'Option 2'
+            },
+            {
+                id: 3,
+                text: 'Option 3'
+            }
+        ]
+    },
 ]
 
 export default questions;

@@ -5,9 +5,9 @@ import { HomeProps } from "./Navigation";
 const Home = ({ navigation }: HomeProps) => {
     return (
         <View style={styles.layout}>
-            <Text>Home Screen</Text>
+            <Text style={styles.titleText}>Find your perfect holiday!</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Questions')} style={styles.button}>
-                <Text>Start</Text>
+                <Text style={styles.buttonText}>Start</Text>
             </TouchableOpacity>
         </View>
     )
@@ -16,15 +16,24 @@ const Home = ({ navigation }: HomeProps) => {
 const styles = StyleSheet.create({
     layout: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'center'
     },
     button: {
-        backgroundColor: 'blue',
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        borderRadius: 25,
-        marginTop: 20
+        backgroundColor: 'orange',
+        paddingVertical: 12,
+        alignItems: 'center',
+        borderRadius: 12,
+        paddingHorizontal: 75
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    titleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 35
     }
 });
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { IQuestion } from "../../interfaces/IQuestion";
 import IAnswer from '../../interfaces/IAnswer';
+import { questionType } from "../../enum/questionType";
 
 interface Props {
     question: IQuestion;
@@ -14,6 +15,13 @@ const TextQuestion = ({ question, addAnswer }: Props) => {
     const handleType = (text: string) => {
         //call addAnswer()
         setAnswer(text);
+        const answer: IAnswer = {
+            questionId: question.id,
+            questionType: question.questionType,
+            textAnswer: text
+        }
+
+        addAnswer(answer);
     }
 
     return (
