@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { IQuestion } from "../../interfaces/IQuestion";
-import IAnswer from '../../interfaces/IAnswer';
-import { questionType } from "../../enum/questionType";
+import { IQuestion } from "../interfaces/IQuestion";
+import IAnswer from '../interfaces/IAnswer';
+import { questionType } from "../enum/questionType";
 
 interface Props {
     question: IQuestion;

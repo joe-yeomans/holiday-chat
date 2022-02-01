@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import { IQuestion } from "../../interfaces/IQuestion";
-import IAnswer from '../../interfaces/IAnswer';
+import { IQuestion } from "../interfaces/IQuestion";
+import IAnswer from '../interfaces/IAnswer';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { IQuestion } from "../../interfaces/IQuestion";
-import IAnswer from '../../interfaces/IAnswer';
+import { IQuestion } from "../interfaces/IQuestion";
+import IAnswer from '../interfaces/IAnswer';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import BouncyCheckboxGroup, {
     ICheckboxButton,

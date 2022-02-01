@@ -1,41 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { useAppSelector, useAppDispatch } from "../app/store";
-import { selectQuestions, loadQuestions, selectIsLoading } from "../features/question/questionsSlice";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import IAnswer from "../interfaces/IAnswer";
-import TextQuestion from "../features/question/TextQuestion";
+import TextQuestion from "../components/TextQuestion";
 import { questionType } from "../enum/questionType";
-import NumberQuestion from "../features/question/NumberQuestion";
-import SingleSelectQuestion from "../features/question/SingleSelectQuestion";
-import MultiSelectQuestion from "../features/question/MultiSelectOption";
-import DateQuestion from "../features/question/DateQuestion";
-
+import NumberQuestion from "../components/NumberQuestion";
+import SingleSelectQuestion from "../components/SingleSelectQuestion";
+import MultiSelectQuestion from "../components/MultiSelectOption";
+import DateQuestion from "../components/DateQuestion";
+import { getQuestions } from '../service/questionService';
+import { IQuestion } from "../interfaces/IQuestion";
+import HolidayModal from "../components/HolidayModal";
+ 
 const Questions = () => {
-    const dispatch = useAppDispatch();
-    const isLoading = useAppSelector(selectIsLoading);
-    const questions = useAppSelector(selectQuestions);
     const [answers, setAnswers] = useState<IAnswer[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [questions, setQuestions] = useState<IQuestion[]>([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        dispatch(loadQuestions());
-    }, []); 
+        loadQuestions();
+    }, []);
+    
+    const loadQuestions = async () => {
+        setIsLoading(true);
+        const questions = await getQuestions();
+        setQuestions(questions);
+        setIsLoading(false);
+    }
+
+    const onClose = () => setShowModal(false);
 
     const addAnswer = (answer: IAnswer) => {
-        setAnswers(prev => {
-            return prev.filter(a => {
-                return a.questionId !== answer.questionId &&
-                    a.questionType !== answer.questionType
-            })
-        })
+        let array = answers;
+
+        array = array.filter(a => {
+            return a.questionId !== answer.questionId &&
+                a.questionType !== answer.questionType
+        });
 
         if (answer.textAnswer ||
             answer.selectedNumber || 
-            answer.selectedOptionIds?.length !== 0 || 
-            answer.singleSelectOption) {
-                setAnswers(prev => [...prev, answer]);
+            answer.selectedOptionIds || 
+            answer.singleSelectOption ) {
+                array.push(answer);
             }
-        //console.log(answers);
+        
+        setAnswers(array);
     }
+
+    useEffect(() => {
+        console.log(answers);
+    }, [answers])
 
     if (isLoading) {
         return (
@@ -47,8 +62,11 @@ const Questions = () => {
 
     return (
         <View style={styles.layout}>
+            <Modal animationType='slide' onRequestClose={onClose} visible={showModal}>
+                <HolidayModal answers={answers} onClose={onClose} />
+            </Modal>
             <ScrollView>
-                {questions.map(question => {
+                {questions && questions.map(question => {
                     switch (question.questionType) {
                         case questionType.text: return <TextQuestion question={question} addAnswer={addAnswer}/>
                         case questionType.number: return <NumberQuestion question={question} addAnswer={addAnswer} />
@@ -58,7 +76,7 @@ const Questions = () => {
                         default: return null;
                     }
                 })}
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => setShowModal(true)}>
                 <Text style={styles.buttonText}>View Holiday's</Text>
             </TouchableOpacity>
             </ScrollView>
@@ -71,15 +89,15 @@ const styles = StyleSheet.create({
     layout: {
         flex: 1,
         alignItems: 'center',
-        marginHorizontal: 10,
-        marginBottom: 50
+        marginHorizontal: 10
     },
     button: {
         backgroundColor: 'orange',
         paddingVertical: 12,
         alignItems: 'center',
         borderRadius: 12,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 30
     },
     buttonText: {
         color: 'white',
