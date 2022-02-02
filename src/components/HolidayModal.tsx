@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import IAnswer from "../interfaces/IAnswer";
 import { getHolidays } from '../service/holidayService';
 import IHoliday from '../interfaces/IHoliday';
+import Holiday from './Holiday';
 
 interface Props {
     answers: IAnswer[];
@@ -34,7 +35,9 @@ const HolidayModal = ({ answers, onClose }: Props) => {
 
     return (
         <View style={styles.layout}>
-            <Text>Holidays</Text>
+            <Text style={styles.titleText}>Holidays</Text>
+            <Text style={styles.secondaryText}>Here are your perfect tailored holidays! </Text>
+            {holidays.map(holiday => <Holiday holiday={holiday}/>)}
             <TouchableOpacity style={styles.button} onPress={onClose}>
                 <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
@@ -45,8 +48,9 @@ const HolidayModal = ({ answers, onClose }: Props) => {
 const styles = StyleSheet.create({
     layout: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 50,
+        marginHorizontal: 10
     },
     button: {
         backgroundColor: 'orange',
@@ -65,6 +69,15 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         marginTop: 25
+    },
+    titleText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    secondaryText: {
+        marginTop: 5,
+        color: 'lightgray',
+        fontWeight: 'bold'
     }
 })
 
