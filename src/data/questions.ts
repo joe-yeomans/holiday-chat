@@ -52,6 +52,29 @@ const questions: IQuestion[] = [
     },
     {
         id: 6,
+        question: 'What countries would you like to visit?',
+        questionType: questionType.multiSelect,
+        multiSelectOptions: [
+            {
+                id: 1,
+                text: 'France'
+            },
+            {
+                id: 2,
+                text: 'Italy'
+            },
+            {
+                id: 3,
+                text: 'Spain'
+            },
+            {
+                id: 4, 
+                text: 'Germany'
+            }
+        ]
+    },
+    {
+        id: 7,
         question: 'What date do you want to go?',
         questionType: questionType.date
     }

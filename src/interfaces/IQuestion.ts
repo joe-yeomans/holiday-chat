@@ -5,9 +5,6 @@ export interface IQuestion {
     id: Number;
     question: String;
     questionType: questionType;
-    text?: String;
-    minNumber?: Number;
-    maxNumber?: Number;
     singleSelectOptions?: ISelect[]
     multiSelectOptions?: ISelect[];
 }
