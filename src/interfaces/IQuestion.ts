@@ -2,7 +2,7 @@ import { questionType } from "../enum/questionType";
 import ISelect from "./ISelect";
 
 export interface IQuestion {
-    id: Number;
+    id: number;
     question: String;
     questionType: questionType;
     singleSelectOptions?: ISelect[]

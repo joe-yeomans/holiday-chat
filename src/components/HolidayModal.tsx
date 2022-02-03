@@ -37,7 +37,7 @@ const HolidayModal = ({ answers, onClose }: Props) => {
         <View style={styles.layout}>
             <Text style={styles.titleText}>Holidays</Text>
             <Text style={styles.secondaryText}>Here are your perfect tailored holidays! </Text>
-            {holidays.map(holiday => <Holiday holiday={holiday}/>)}
+            {holidays.map(holiday => <Holiday holiday={holiday} key={holiday.id}/>)}
             <TouchableOpacity style={styles.button} onPress={onClose}>
                 <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>

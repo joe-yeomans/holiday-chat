@@ -1,9 +1,7 @@
 import React from "react";
-import { Text } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import Home from "./Home";
 import Questions from '../screens/Questions';
-import { StackScreenProps } from '@react-navigation/stack';
 
 type RootStackParamList = {
     Home: undefined;

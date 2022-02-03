@@ -68,11 +68,11 @@ const Questions = () => {
             <ScrollView>
                 {questions && questions.map(question => {
                     switch (question.questionType) {
-                        case questionType.text: return <TextQuestion question={question} addAnswer={addAnswer}/>
-                        case questionType.number: return <NumberQuestion question={question} addAnswer={addAnswer} />
-                        case questionType.singleSelect: return <SingleSelectQuestion question={question} addAnswer={addAnswer} />
-                        case questionType.multiSelect: return <MultiSelectQuestion question={question} addAnswer={addAnswer} />
-                        case questionType.date: return <DateQuestion question={question} addAnswer={addAnswer} />
+                        case questionType.text: return <TextQuestion question={question} addAnswer={addAnswer} key={question.id}/>
+                        case questionType.number: return <NumberQuestion question={question} addAnswer={addAnswer} key={question.id}/>
+                        case questionType.singleSelect: return <SingleSelectQuestion question={question} addAnswer={addAnswer} key={question.id}/>
+                        case questionType.multiSelect: return <MultiSelectQuestion question={question} addAnswer={addAnswer} key={question.id}/>
+                        case questionType.date: return <DateQuestion question={question} addAnswer={addAnswer} key={question.id}/>
                         default: return null;
                     }
                 })}
